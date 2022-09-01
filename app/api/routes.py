@@ -7,15 +7,17 @@ api = Blueprint('api',__name__, url_prefix='/api')
 @api.route('/cars', methods = ['POST'])
 @token_required
 def create_car(current_user_token):
-    make = request.json['make']
+    name = request.json['name']
     model = request.json['model']
     year = request.json['year']
     price = request.json['price']
+    description = request.json['description']
+    car_quality = request.json['car_quality']
     user_token = current_user_token.token
 
     print(f'BIG TESTER: {current_user_token.token}')
 
-    car = Car(make, model, year, price, user_token = user_token )
+    car = Car(name, model, year, price, description, car_quality, user_token = user_token )
 
     db.session.add(car)
     db.session.commit()
@@ -42,10 +44,12 @@ def get_single_car(current_user_token, id):
 @token_required
 def update_car(current_user_token,id):
     car = Car.query.get(id) 
-    car.make = request.json['make']
+    car.name = request.json['name']
     car.model = request.json['model']
     car.year = request.json['year']
     car.price = request.json['price']
+    car.description = request.json['description']
+    car.car_quality = request.json['car_quality']
     car.user_token = current_user_token.token
 
     db.session.commit()
