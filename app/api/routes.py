@@ -36,9 +36,13 @@ def get_car(current_user_token):
 @api.route('/cars/<id>', methods = ['GET'])
 @token_required
 def get_single_car(current_user_token, id):
-    car = Car.query.get(id)
-    response = car_schema.dump(car)
-    return jsonify(response)
+    fan = current_user_token.token
+    if fan == current_user_token.token:
+        car = Car.query.get(id)
+        response = car_schema.dump(car)
+        return jsonify(response)
+    else:
+        return jsonify({"message": "valid Token Required"}), 401
 
 @api.route('/cars/<id>', methods = ['POST','PUT'])
 @token_required

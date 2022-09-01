@@ -50,9 +50,9 @@ class User(db.Model, UserMixin):
 
 class Car(db.Model):
     id = db.Column(db.String, primary_key = True)
-    name = db.Column(db.String(150))
-    model = db.Column(db.String(200))
-    year = db.Column(db.Date)
+    name = db.Column(db.String(150), nullable = False)
+    model = db.Column(db.String(200), nullable = False)
+    year = db.Column(db.Date, nullable = False)
     price = db.Column(db.Numeric(10,2))
     description = db.Column(db.String(200))
     car_quality = db.Column(db.String(150))
